@@ -1,0 +1,8 @@
+C skeleton components
+    bstrlib     : better strings
+    darray      : Dynamic array
+    llist       : Double linked list
+    speedunit   : Unit testing
+    cJSON       : JSON library
+    puzzle      : Plugin system 
+    chalk       : Blackboard implementation
