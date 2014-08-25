@@ -1,0 +1,4 @@
+CFLAGS += -Wall
+
+!cc = |> gcc $(CFLAGS) -c %f -o %o |> %B.o
+!a = |> ar rcs %o %f |> 
