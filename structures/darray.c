@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include "darray.h"
-#include "dbg.h"
+#include "util/dbg.h"
 
 
 /** Initialize or allocate a new array.

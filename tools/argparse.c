@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "dbg.h"
+#include "util/dbg.h"
 #include "argparse.h"
 
 Argument* new_argument(){
@@ -81,4 +81,5 @@ ArgList *ArgList_make(int argc, char** argv){
     if (currentarg) arglist_add(list, currentarg);
     return (list);
 }
+
 

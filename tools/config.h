@@ -3,7 +3,7 @@
 
 #define SETTINGS_H
 
-#include "darray.h"
+#include "structures/darray.h"
 
 typedef struct _setting {
     /* data */

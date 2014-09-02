@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "config.h"
-#include "dbg.h"
+#include "util/dbg.h"
 
 // Parse a line of a settings file.
 setting_t*
