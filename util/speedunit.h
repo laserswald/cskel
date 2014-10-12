@@ -11,7 +11,6 @@
     Speedunit is liscenced under the DWTFYW Liscence. Effectively, I don't care
     at all about what you do to this. Just be nice and say the above, kay?
 */
-#define NDEBUG
 
 #ifndef __SPEEDUNIT
 #define __SPEEDUNIT
@@ -77,7 +76,7 @@ int sp_status;
 
 // \macro
 // Run a group of tests.
-#define sp_run_suite(suite) safe_block( char* msg = suite(); if(msg){ printf("%s\n", msg); free(msg); } )
+#define sp_run_suite(suite) safe_block( char* msg = suite(); if(msg){ puts(msg); free(msg); } )
 #define sp_report() printf("Tests run: %d\n", sp_tests_run)
 
 #endif
