@@ -20,12 +20,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "dbg.h"
 
-int sp_tests_run;
-int sp_assertions;
-int sp_tests_failed;
-int sp_status;
+int mu_tests_run;
+int mu_assertions;
+int mu_tests_failed;
+int mu_status;
 
 // \macro
 // Define a safe block for making macros with multiple expressions.
@@ -35,12 +34,12 @@ int sp_status;
 
 // \macro
 // Make a standard signature for a test.
-#define sp_test(testname) char *testname()
-#define sp_suite(testname) char *testname()
+#define mu_test(testname) char *testname()
+#define mu_suite(testname) char *testname()
 
 // \macro 
 // Print the fail message.
-#define sp_failmsg(message) safe_block( \
+#define mu_failmsg(message) safe_block( \
     char* msg = malloc(255); \
     snprintf(msg, 255, "\nfail (%s:%d): %s, in %s", __FILE__, __LINE__, message, __FUNCTION__); \
     return msg; \
@@ -53,23 +52,23 @@ int sp_status;
  * \param a The expression to be evaluated.
  * \param message The message to display. 
  */ 
-#define sp_assert(a, message) safe_block( \
-    sp_assertions++; \
+#define mu_assert(a, message) safe_block( \
+    mu_assertions++; \
     if (!(a)) \
-        sp_failmsg(message); \
+        mu_failmsg(message); \
     else printf("."); \
 )
 
 // \macro
 // Assert that two strings are equal. If not, fail with the message.
-#define sp_streql(str, ing, message) sp_assert(strcmp(str, ing) == 0, message)
+#define mu_streql(str, ing, message) mu_assert(strcmp(str, ing) == 0, message)
 
 // \macro
 // Run a test.
-#define sp_run_test(test) safe_block( \
-    debug("Running test %s...", #test ); \
+#define mu_run_test(test) safe_block( \
+    fprintf(stderr, "Running test %s...", #test ); \
     char* message = test(); \
-    sp_tests_run++; \
+    mu_tests_run++; \
     if (message) { \
         return message; \
     } \
@@ -77,8 +76,8 @@ int sp_status;
 
 // \macro
 // Run a group of tests.
-#define sp_run_suite(suite) safe_block( char* msg = suite(); if(msg){ printf("%s\n", msg); free(msg); } )
-#define sp_report() printf("Tests run: %d\n", sp_tests_run)
+#define mu_run_suite(suite) safe_block( char* msg = suite(); if(msg){ printf("%s\n", msg); free(msg); } )
+#define mu_report() printf("Tests run: %d\n", mu_tests_run)
 
 #endif
 
