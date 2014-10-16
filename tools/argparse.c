@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "dbg.h"
+#include "util/dbg.h"
 #include "argparse.h"
 
 Argument* new_argument(){
