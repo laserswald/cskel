@@ -1,4 +1,3 @@
-
 # Skeleton Medium-sized Makefile for C programs.
 #
 # by Ben Davenport-Ray
@@ -6,45 +5,41 @@
 BINNAME=cskel
 VERSION=0.0.1
 
-BINDIR=bin
 LIBNAME=lib$(BINNAME)
 
-DYNLIB=$(BINNAME).dll
 STATLIB=$(LIBNAME).a
 TESTPRG=$(BINNAME)_test
-EXECUTABLE=$(BINNAME)
+PROGRAM=$(BINNAME)
 SONAME=$(LIBNAME).so.$(VERSION)
+DYNLIB=$(LIBNAME).so.0
 
 PKGNAME=$(BINNAME)-$(VERSION)
 
 MODULES=
 
 # Source file gathering.
-SOURCE=*.c
-SRCDIR=src
-SRCS:=$(wildcard $(SRCDIR)/$(SOURCE))
+SRCS:=$(wildcard ./*/*.c)
+INCLUDES:=$(wildcard ./*/*.h)
 
-INCLUDE=include
+OBJS=$(SRCS:.c=.o)
 
-OBJECT=$(SRCS:.c=.o)
-OBJDIR=obj
-OBJS:=$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(OBJECT))
-
-CFLAGS=-g -Wall -I$(INCLUDE) -L. 
+CFLAGS=-g -Wall -I. -fPIC -lm
 LDFLAGS=
-LFLAGS= -shared -fPIC -Wl,-soname,$(SONAME)
+LFLAGS= -lm -Wl,-soname,$(SONAME)
 
 TESTDIR=test
 TESTSRC:=$(wildcard $(TESTDIR)/$(SOURCE))
 TESTFLAGS=
 
+CLEAN_OBJS=$(OBJS)
+
 all: build check
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(DYNLIB): $(OBJS)
-	$(CC) $(LFLAGS) $^ -o $(DYNLIB) 
+	ld -shared -soname $(SONAME) -o $@ -lc $^
 
 $(STATLIB): $(OBJS)
 	ar rcs $@ $^ 	
@@ -52,25 +47,26 @@ $(STATLIB): $(OBJS)
 $(TESTPRG): $(TESTSRC) $(STATLIB)
 	$(CC) $(CFLAGS) $^ -o $@ 
 
-build: setup $(PROGRAM) $(TESTPRG)
+$(PROGRAM): $(SRCS)
+	$(CC) $(CFLAGS) $^ -o $@ 
+
+build: $(DYNLIB) $(TESTPRG)
 
 rebuild: clean build
 
+install: $(DYNLIB)
+	install $(DYNLIB) /usr/lib
+	mkdir /usr/include/cskel
+	install $(INCLUDES) /usr/include/cskel
+
+uninstall:
+
+
 clean: 
-	rm -r $(OBJDIR)
-
-dist:
-	tar -zxvf $(PKGNAME)
-
-distexec:
-	$(ZIP) $(PKGNAME)-win32.zip README.md $(EXECUTABLE)
+	rm $(CLEAN_OBJS)
 
 check: $(TESTPRG)
 	exec ./$(TESTPRG)
-
-setup:
-	mkdir -p $(BINDIR)
-	mkdir -p $(OBJDIR)
 
 .PHONY: all build rebuild clean dist distexec check install setup
 
