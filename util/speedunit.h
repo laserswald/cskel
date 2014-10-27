@@ -11,7 +11,6 @@
     Speedunit is liscenced under the DWTFYW Liscence. Effectively, I don't care
     at all about what you do to this. Just be nice and say the above, kay?
 */
-#define NDEBUG
 
 #ifndef __SPEEDUNIT
 #define __SPEEDUNIT
