@@ -1,3 +1,0 @@
-include_rules
-CFLAGS += -I..
-:foreach *.c |> !cc |>

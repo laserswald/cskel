@@ -1,5 +1,0 @@
-include_rules
-CFLAGS += -I../bstrlib
-CFLAGS += -I../util
-CFLAGS += -I../structures
-:foreach *.c |> !cc |>
