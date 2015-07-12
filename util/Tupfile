@@ -1,4 +1,0 @@
-include_rules
-CFLAGS += -I../bstrlib
-CFLAGS += -I../
-:foreach *.c |> !cc |>

@@ -3,28 +3,29 @@
 
 #define BLACKBOARD_H
 
-#include "darray.h"
-#include "bstrlib.h"
+#include "structures/darray.h"
+#include "bstrlib/bstrlib.h"
 
 // A blackboard is a collection of posts; no object knows who posted, they just know the information.
 //
-typedef struct _blackboard_post_t {
+typedef struct blackboard_post {
     /* data */
     void* data;
     bstring type;
-    bstrList tags;
+    struct bstrList tags;
 } blackboard_post;
 
 
-typedef struct _blackboard {
+typedef struct blackboard {
     /* data */
     DArray* data;
 } blackboard;
 
 /* Allocation functions. */
 blackboard* bb_new();
-blackboard_post* bb_newpost(void* data, bstring type, bstrList tags);
+blackboard_post* bb_newpost(void* data, bstring type, struct bstrList* tags);
 
+void* bb_unpack(blackboard_post* post);
 
 // Post manipulation.
 /* Add an item to the blackboard. */
@@ -41,6 +42,7 @@ blackboard_post* bb_takelast(blackboard* b, bstring search);
 
 /* retrieve all matches in a DArray. */
 DArray* bb_retrall(blackboard* b, bstring search);
+
 
 
 #endif /* end of include guard: BLACKBOARD_H */
