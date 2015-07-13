@@ -1,5 +1,5 @@
 
-CFLAGS= -g -I.
+CFLAGS= -g -I. -L. -lm
 
 # Grab all the sources.
 allsrcs=$(wildcard **/*.c *.c)
@@ -16,13 +16,15 @@ pobjs=$(patsubst %.c,%.o, $(psrcs))
 all: libcskel.a cskel_test
 
 libcskel.a: $(pobjs)
+	ar rcs libcskel.a $^
 
 cskel_test: libcskel.a $(tobjs)
+	$(CC) $(CFLAGS) -o $@ $(tobjs) -lcskel
 
 clean: 
-	rm $(objs)
 	rm $(tobjs)
 	rm $(pobjs)
 	rm libcskel.a
 	rm cskel_test
 
+.PHONY: clean all
